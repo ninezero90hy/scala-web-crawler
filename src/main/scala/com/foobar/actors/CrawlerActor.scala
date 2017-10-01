@@ -39,6 +39,7 @@ class CrawlerActor extends Actor {
 
   override def postStop(): Unit = {
     println("SiteMap prepared till now >>>", SiteMap.tree)
+    context.system.terminate()
   }
 }
 

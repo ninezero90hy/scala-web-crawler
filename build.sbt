@@ -1,3 +1,5 @@
+import sbt.util
+
 name := "scala-web-crawler"
 
 version := "0.1"
@@ -9,3 +11,5 @@ libraryDependencies ++= Seq(
     "commons-validator" % "commons-validator" % "1.6",
     "net.ruippeixotog" %% "scala-scraper" % "2.0.0"
   )
+
+logLevel := Level.Error

@@ -2,7 +2,7 @@ package com.foobar
 
 import java.net.URL
 
-import akka.actor.{ActorSystem, Props}
+import akka.actor.{ActorSystem, PoisonPill, Props}
 import akka.util.Timeout
 import com.foobar.actors.CrawlerActor
 import com.foobar.models.{PageData, Visit}
@@ -14,8 +14,11 @@ object Boot extends App {
   val url = "http://wiprodigital.com/"
 
   implicit val system = ActorSystem("AskTestSystem")
-  val myActor = system.actorOf(Props[CrawlerActor], name = "crawlerActor")
+  val myActor = system.actorOf(Props[CrawlerActor].withDispatcher(
+    "prio-dispatcher"), name = "crawlerActor")
   myActor ! Visit(new URL(url))
+  Thread.sleep(5000)
+  myActor ! PoisonPill
 }
 
 object SiteMap {
